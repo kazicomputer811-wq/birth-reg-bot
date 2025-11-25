@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birth Registration Check</title>
+</head>
+<body>
+
+  <h2>জন্মনিবন্ধন যাচাই</h2>
+
+  <input id="birthId" type="text" placeholder="১৭ সংখ্যার জন্ম নিবন্ধন নম্বর দিন">
+  <button onclick="checkBirth()">Check</button>
+
+  <p id="result"></p>
+
+  <script>
+    async function checkBirth() {
+      let id = document.getElementById("birthId").value;
+
+      if(id.length !== 17){
+        document.getElementById("result").innerText = "⚠️ ১৭ সংখ্যার জন্ম নিবন্ধন নম্বর দিন!";
+        return;
+      }
+
+      let res = await fetch("https://your-server-url-here/birth-reg", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: "Test User",
+          father: "Test Father",
+          mother: "Test Mother",
+          dob: "2000-01-01",
+          upazila: "Dhaka"
+        })
+      });
+
+      let data = await res.json();
+      document.getElementById("result").innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+
+</body>
+</html>
